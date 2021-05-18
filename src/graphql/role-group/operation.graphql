@@ -1,0 +1,53 @@
+query findRoleGroupList($param: QueryListParam!) {
+  roleGroupAll(param: $param) {
+    ...RoleGroup
+  }
+  roleGroupCount(param: $param)
+}
+
+fragment RoleGroup on RoleGroup {
+  id
+  groupCode
+  groupName
+}
+
+query findRoleGroupManageList($param: QueryListParam!) {
+  roleGroupAll(param: $param) {
+    ...RoleGroupManage
+  }
+  roleGroupCount(param: $param)
+}
+
+query findRoleGroup($id: ID!) {
+  roleGroup(id: $id) {
+    ...RoleGroupManage
+  }
+}
+
+mutation roleGroupDestroyById($id: String!) {
+  roleGroupDestroyById(id: $id)
+}
+
+mutation roleGroup($param: RoleGroupSaveIn!) {
+  roleGroup(param: $param)
+}
+
+fragment RoleGroupManage on RoleGroup {
+  id
+  groupCode
+  groupName
+  createdAt
+  remark
+  roleGroupItemRoleGroupId {
+    ...RoleGroupItemRoleGroupId
+  }
+}
+
+fragment RoleGroupItemRoleGroupId on RoleGroupItem {
+  id
+  roleIdObj {
+    id
+    roleCode
+    roleName
+  }
+}

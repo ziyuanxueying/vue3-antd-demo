@@ -1,0 +1,56 @@
+query findRoleList($param: QueryListParam!) {
+  roleAll(param: $param) {
+    ...Role
+  }
+  roleCount(param: $param)
+}
+
+fragment Role on Role {
+  id
+  roleCode
+  roleName
+}
+
+fragment RoleManage on Role {
+  id
+  roleCode
+  roleName
+  createdAt
+  remark
+  appUserRoleTypeId {
+    ...appUserRoleTypeId
+  }
+}
+
+fragment appUserRoleTypeId on AppUserRole {
+  id
+  appUserId
+  appUserIdObj {
+    userName
+    nickName
+    phone
+  }
+}
+
+# 角色编辑
+query findRoleListManage($param: QueryListParam!) {
+  roleAll(param: $param) {
+    ...RoleManage
+  }
+  roleCount(param: $param)
+}
+
+mutation roleDestroyById($id: String!) {
+  roleDestroyById(id: $id)
+}
+
+query findRole($id: ID!) {
+  role(id: $id) {
+    ...RoleManage
+  }
+}
+
+# 角色保存
+mutation role($param: RoleSaveIn!) {
+  role(param: $param)
+}

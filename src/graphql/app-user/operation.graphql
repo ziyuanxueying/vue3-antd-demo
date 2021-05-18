@@ -1,0 +1,75 @@
+query findAppUserList($param: QueryListParam!) {
+  appUserAll(param: $param) {
+    ...AppUser
+  }
+  appUserCount(param: $param)
+}
+
+query findAppUser($id: ID!) {
+  appUser(id: $id) {
+    ...AppUser
+  }
+}
+
+# 查询用列表加载 单一对象
+query findAppUserListOnly($param: QueryListParam!) {
+  appUserAll(param: $param) {
+    ...AppUserOnly
+  }
+  appUserCount(param: $param)
+}
+
+fragment AppUser on AppUser {
+  id
+  userName
+  nickName
+  realName
+  userGender
+  phone
+  avatarUrl
+  appUserStatus
+  createdAt
+  appUserRoleAppUserId {
+    ...AppUserRoleAppUserId
+  }
+}
+
+fragment AppUserRoleAppUserId on AppUserRole {
+  id
+  roleType
+  typeId
+  typeIdModel {
+    __typename
+    ... on Role {
+      name: roleName
+      code: roleCode
+    }
+    ... on RoleGroup {
+      name: groupName
+      code: groupCode
+    }
+  }
+}
+
+fragment AppUserOnly on AppUser {
+  id
+  userName
+  nickName
+  realName
+  userGender
+  phone
+  appUserStatus
+  createdAt
+}
+
+mutation appUserDestroyById($id: String!) {
+  appUserDestroyById(id: $id)
+}
+
+mutation appUserStatus($id: ID!, $appUserStatus: String!) {
+  appUser(param: { id: $id, appUserStatus: $appUserStatus })
+}
+
+mutation appUser($param: AppUserSaveIn!) {
+  appUser(param: $param)
+}

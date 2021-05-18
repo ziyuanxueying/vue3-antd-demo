@@ -1,0 +1,27 @@
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+overwrite: true
+schema: 'http://localhost:8025/graphql?userId=333'
+documents: 'src/**/*.graphql'
+generates:
+  src/generator/auth-center.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+  src/generator/auth-center.operation.ts:
+    preset: import-types
+    presetConfig:
+      typesPath: ./auth-center
+      importTypesNamespace: SchemaTypes
+    plugins:
+      - 'typescript-react-apollo'
+    config:
+      # defaultBaseOptions: {
+      #   fetchPolicy: 'cache-and-network'
+      # }
+  # src/generator/auth-center.operation.ts:
+  #   plugins:
+  #     - 'typescript-react-apollo'
+config:
+  immutableTypes: true
