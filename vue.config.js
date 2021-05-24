@@ -6,7 +6,7 @@ const productionGzipExtensions = ['js', 'css']
 const cdn = {
   css: [],
   js: [
-    'https://unpkg.com/vue@2.6.10/dist/vue.runtime.min.js',
+    'https://unpkg.com/vue@3',
     'https://unpkg.com/vue-router@3.0.3/dist/vue-router.min.js',
     'https://unpkg.com/vuex@3.0.1/dist/vuex.min.js',
     'https://unpkg.com/axios@0.18.0/dist/axios.min.js'
@@ -15,7 +15,7 @@ const cdn = {
 module.exports = {
   // 项目部署的基础路径
   publicPath: './',
-  outputDir: 'dist', // 将构建好的文件输出到哪里（或者说将编译的文件）
+  outputDir: 'dist', // 将构建好的文件输出到哪里（或者说将编译的文件） process.env.outputDir, // 生成文件的目录名称
   assetsDir: 'static', // 放置静态资源的地方 (js/css/img/font/...)
 
   // 配置 webpack-dev-server 行为。
@@ -53,14 +53,14 @@ module.exports = {
   productionSourceMap: true,
 
   configureWebpack: config => {
-    if (isProd) {
+    if (process.env.NODE_ENV === 'production') {
       // #region cdn拆分
       config.externals = {
         vue: 'Vue',
         'vue-router': 'VueRouter',
         vuex: 'Vuex',
         axios: 'axios'
-      };
+      }
       // #endregion
       // #region 打包生产.gz包
       config.plugins.push(
@@ -70,15 +70,15 @@ module.exports = {
           threshold: 10240,
           minRatio: 0.8
         })
-      );
+      )
     }
   },
   chainWebpack: config => {
     if (isProd) {
       config.plugin('html').tap(args => {
-        args[0].cdn = cdn;
-        return args;
-      });
+        args[0].cdn = cdn
+        return args
+      })
     }
   },
 
@@ -93,11 +93,13 @@ module.exports = {
 
     // 为预处理器的 loader 传递自定义选项。比如传递给
     // sass-loader 时，使用 `{ sass: { ... } }`。
-    loaderOptions: {},
-
-    // 为所有的 CSS 及其预处理文件开启 CSS Modules。
-    // 这个选项不会影响 `*.vue` 文件。
-    modules: false
+    loaderOptions: {
+      less: {
+        lessOptions: {
+          javascriptEnabled: true
+        }
+      }
+    }
   },
 
   // 在生产环境下为 Babel 和 TypeScript 使用 `thread-loader`
