@@ -17,8 +17,7 @@ export default {
   methods: {
     btnLogin() {
       console.log(getQueryString().code)
-      getQueryString().code && login(getQueryString().code)
-      //   toFeishu()
+      getQueryString().code ? login(getQueryString().code) : toFeishu()
     }
   }
 }
