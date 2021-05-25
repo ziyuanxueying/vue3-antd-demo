@@ -1,9 +1,7 @@
-import request from '../plugins/request'
+import { post, get } from '../plugins/request'
 
-// 文章列表
-export function article() {
-  return request({
-    url: '/profile ',
-    method: 'get'
-  })
+// 飞书登录
+export function login(id) {
+    // http://10.101.1.12/user/login?code=
+    return get('/user/login', { code: id })
 }

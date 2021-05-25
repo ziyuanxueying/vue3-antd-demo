@@ -1,10 +1,17 @@
 // import saveStore from '../config/mUtils.js'
 
-export function getQueryString(name) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
-    var r = window.location.search.substr(1).match(reg)
-    if (r != null) return unescape(r[2]);
-    return null
+export function getQueryString() {
+  const url = decodeURI(location.search) // 获取url中"?"符后的字串(包括问号)
+  let query = {}
+  if (url.indexOf('?') != -1) {
+    const str = url.substr(1)
+    const pairs = str.split('&')
+    for (let i = 0; i < pairs.length; i++) {
+      const pair = pairs[i].split('=')
+      query[pair[0]] = pair[1]
+    }
+  }
+  return query // 返回对象
 }
 
 export function toFeishu() {
@@ -13,7 +20,7 @@ export function toFeishu() {
     const buildUrl = 'https://open.feishu.cn/open-apis/authen/v1/index?redirect_uri=http%3A%2F%2Fdmp.naxions.com&app_id=cli_a0d871e09578900d&state=naxions'
     const testUrl = 'https://open.feishu.cn/open-apis/authen/v1/index?redirect_uri=http%3A%2F%2Fdmp-test.naxions.com/&app_id=cli_a0113387dfb8500c&state=naxions'
     // const devUrl = 'https://open.feishu.cn/open-apis/authen/v1/index?redirect_uri=http%3A%2F%2F10.101.1.108:8888/&app_id=cli_a0113387dfb8500c&state=naxions';
-    const devUrl = 'https://open.feishu.cn/open-apis/authen/v1/index?redirect_uri=http%3A%2F%2F10.101.0.71%3A6060%2F/&app_id=cli_a0113387dfb8500c&state=naxions123'
+    const devUrl = 'https://open.feishu.cn/open-apis/authen/v1/index?redirect_uri=http%3A%2F%2F10.101.0.71%3A6060%2F&app_id=cli_a0113387dfb8500c&state=naxions'
     let url;
     console.log(target)
     switch (target) {

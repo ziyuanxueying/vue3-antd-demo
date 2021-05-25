@@ -1,12 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Welcome to Your Vue.js App" />
-  <a-button type="primary" @click="btnLogin">按钮</a-button>
+  <a-button type="primary" @click="btnLogin">飞书登录</a-button>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import { toFeishu } from './utils/common'
+import { getQueryString, toFeishu } from './utils/common'
+import { login } from './api/test'
+
 export default {
   name: 'App',
   components: {
@@ -14,8 +16,9 @@ export default {
   },
   methods: {
     btnLogin() {
-      console.log(123)
-      toFeishu()
+      console.log(getQueryString().code)
+      getQueryString().code && login(getQueryString().code)
+      //   toFeishu()
     }
   }
 }
