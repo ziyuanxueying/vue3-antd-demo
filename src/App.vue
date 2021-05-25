@@ -14,9 +14,11 @@ export default {
   components: {
     HelloWorld
   },
+  created() {
+    getQueryString().code && login(getQueryString().code)
+  },
   methods: {
     btnLogin() {
-      console.log(getQueryString().code)
       getQueryString().code ? login(getQueryString().code) : toFeishu()
     }
   }
