@@ -11,7 +11,9 @@ module.exports = {
     // 分号
     semi: [0],
     'prettier/prettier': 'off', // 解决prettier报错
-    'vue/no-multiple-template-root': 'off'
+    'vue/no-multiple-template-root': 'off',
+    // 0 = off, 1 = warn, 2 = error
+    'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: false }]
   },
   parserOptions: {
     parser: 'babel-eslint'

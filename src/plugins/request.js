@@ -1,20 +1,24 @@
-import axios from "axios";
-let baseURL = "/api/";
+import axios from 'axios'
+let baseURL = '/api/'
+import { message } from 'ant-design-vue'
+
 const service = axios.create({
   baseURL,
-  timeout: 5000 // request timeout 
-});
+  timeout: 5000 // request timeout
+})
+
 service.interceptors.request.use(
   config => {
     // 如果有token 就携带tokon
-    let token = window.localStorage.getItem("accessToken");
+    let token = window.localStorage.getItem('accessToken')
     if (token) {
-      config.headers.common.Authorization = token;
+      config.headers.common.Authorization = token
     }
-    return config;
+    config.headers.common.server_ticket = 'eL7TMyvKVsA8ns7EKznppw35+djogLK7QuxYP00xsolfI22mvLHVDesVWD19RKK7'
+    return config
   },
   error => Promise.reject(error)
-);
+)
 // 响应拦截器
 service.interceptors.response.use(
   response => {
@@ -30,37 +34,36 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
 /**
  * 封装post请求
  * @param url
  * @param data
  * @returns {Promise}
  */
-
 export function post(url, data = {}) {
-    return new Promise((resolve, reject) => {
-        console.log(url, data)
-        service
-            .post(url, data)
-            .then(response => {
-                if (response && (response.code === 200 || response.code === '200')) {
-                    // 返回成功处理  这里传的啥 后续调用的时候 res就是啥
-                    resolve(response.data)
-                } else {
-                    // resolve(response.data)
-                    // 错误处理
-                    reject(response)
-
-                    // Message.error(response.message || response.msg || '请求异常')
-                }
-            })
-            .catch(err => {
-                let message = '请求失败！请检查网络'
-                if (err.response) message = err.response.data.msg || err.response.data.message
-                // Message.error(message || '请求异常')
-                reject(err)
-            })
-    })
+  return new Promise((resolve, reject) => {
+    console.log(url, data)
+    service
+      .post(url, data)
+      .then(response => {
+        if (response && (response.code === 200 || response.code === '200')) {
+          // 返回成功处理  这里传的啥 后续调用的时候 res就是啥
+          resolve(response.data)
+        } else {
+          // resolve(response.data)
+          // 错误处理
+          reject(response)
+          message.error(response.message || response.msg || '请求异常')
+        }
+      })
+      .catch(err => {
+        let message = '请求失败！请检查网络'
+        if (err.response) message = err.response.data.msg || err.response.data.message
+        message.error(message || '请求异常')
+        reject(err)
+      })
+  })
 }
 /**
  * get方法，对应get请求
@@ -68,26 +71,27 @@ export function post(url, data = {}) {
  * @param {Object} params [请求时携带的参数]
  */
 export function get(url, params) {
-    return new Promise((resolve, reject) => {
-        service
-            .get(url, { params: params })
-            .then(res => {
-                if (res && (res.code === 200 || res.code === '200')) {
-                    // 返回成功处理  这里传的啥 后续调用的时候 res就是啥
-                    resolve(res.data)
-                } else {
-                    // 错误处理
-                    reject(res)
-                    // Message.error(res.message || res.msg || '请求异常')
-                }
-            })
-            .catch(err => {
-                let message = '请求失败！请检查网络'
-                if (err.response) message = err.response.data.msg || err.response.data.message
-                // Message.error(message || '请求异常')
-                reject(err)
-            })
-    })
+  return new Promise((resolve, reject) => {
+    service
+      .get(url, { params: params })
+      .then(res => {
+        if (res && (res.code === 200 || res.code === '200')) {
+          // 返回成功处理  这里传的啥 后续调用的时候 res就是啥
+          resolve(res.data)
+        } else {
+          // 错误处理
+          reject(res)
+          message.error(res.message || res.msg || '请求异常')
+        }
+      })
+      .catch(err => {
+        let msg = '请求失败！请检查网络'
+        message.error(msg || '请求异常')
+        // message.error('This is an error message')
+        console.log(message)
+        throw new Error(err)
+      })
+  })
 }
 
 export default service

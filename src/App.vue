@@ -1,37 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
-  <a-button type="primary" @click="btnLogin">飞书登录</a-button>
+  <router-view />
+  <!-- <router-view v-wechat-title="$route.meta.title"   /> -->
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import { getQueryString, toFeishu } from './utils/common'
-import { login } from './api/test'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  },
-  created() {
-    getQueryString().code && login(getQueryString().code)
-  },
-  methods: {
-    btnLogin() {
-      getQueryString().code ? login(getQueryString().code) : toFeishu()
-    }
-  }
+  name: 'App'
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="less">
+/*每个页面公共css */
+@import '../src/common/global.less';
 </style>

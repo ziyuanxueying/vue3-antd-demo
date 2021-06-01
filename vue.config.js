@@ -4,12 +4,13 @@ const productionGzipExtensions = ['js', 'css']
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const cdn = {
-  css: [],
+  css: ['https://unpkg.com/ant-design-vue@2.1.6/dist/antd.min.js'],
   js: [
     'https://unpkg.com/vue@3',
-    'https://unpkg.com/vue-router@3.0.3/dist/vue-router.min.js',
+    'https://unpkg.com/vue-router@4',
     'https://unpkg.com/vuex@3.0.1/dist/vuex.min.js',
-    'https://unpkg.com/axios@0.18.0/dist/axios.min.js'
+    'https://unpkg.com/axios@0.18.0/dist/axios.min.js',
+    'https://unpkg.com/ant-design-vue@2.1.6/dist/antd.min.js'
   ]
 }
 module.exports = {
@@ -23,7 +24,8 @@ module.exports = {
     port: 6060,
     proxy: {
       '/api': {
-        target: 'http://10.101.1.12',
+        target: 'http://test-bi.naxions.com',
+        // target: 'http://10.101.1.12',
         changeOrigin: true,
         secure: false,
         // ws: true,
