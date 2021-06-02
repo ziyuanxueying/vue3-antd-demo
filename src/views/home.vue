@@ -1,77 +1,63 @@
 <template>
-  <div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    <a-button type="primary" @click="toHome">飞书登录</a-button>
-    <br />
-    <iframe id="fj-iframe" ref="iframe" :src="orderFoodUrl" frameborder="0" style="width: 200px; height: 200px" />
-    <!-- <img :src="orderFoodUrl1" style="display: none" /> -->
-    <a-button style="margin-top: 20px" type="primary" @click="btnBeiji">跳转北极星</a-button>
-  </div>
+  <a-layout>
+    <a-layout-sider class="left-sider" v-model:collapsed="collapsed" collapsible>
+      <div class="logo" />
+      <a-menu mode="inline" v-model:selectedKeys="selectedKeys">
+        <a-menu-item key="1">
+          <user-outlined />
+          <span class="nav-text">nav 1</span>
+        </a-menu-item>
+        <a-menu-item key="2">
+          <video-camera-outlined />
+          <span class="nav-text">nav 2</span>
+        </a-menu-item>
+        <a-menu-item key="3">
+          <upload-outlined />
+          <span class="nav-text">nav 3</span>
+        </a-menu-item>
+        <a-menu-item key="4">
+          <user-outlined />
+          <component :is="$antIcons['StepBackwardOutlined']" />
+          <span class="nav-text">nav 4</span>
+        </a-menu-item>
+      </a-menu>
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header :style="{ background: '#fff', padding: 0 }" />
+      <a-layout-content :style="{ margin: '24px 16px 0' }">
+        <div :style="{ padding: '24px', background: '#fff', height: '100%' }">content</div>
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
 </template>
-
 <script>
-import HelloWorld from '../components/HelloWorld'
-import { getQueryString, toFeishu } from '../utils/common'
-import { login } from '../api/test'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 export default {
-  components: {
-    HelloWorld
-  },
   data() {
     return {
-      orderFoodUrl: ''
-      // orderFoodUrl: 'http://test-bi.naxions.com/decision?fr_username=seven'
+      collapsed: ref(false),
+      selectedKeys: ref(['1'])
     }
   },
   setup() {
-    const router = useRouter()
-    const toHome = () => {
-      router.push({
-        name: 'Home'
-      })
+    const onCollapse = (collapsed, type) => {
+      console.log(collapsed, type)
     }
+
+    const onBreakpoint = broken => {
+      console.log(broken)
+    }
+
     return {
-      toHome
-    }
-  },
-  created() {
-    console.log(window.self === window.top) //如果返回true –> 说明页面并没有被嵌套在iframe中
-    // getQueryString().code && login(getQueryString().code)
-  },
-  methods: {
-    btnLogin() {
-      //   getQueryString().code ? this.getLogin() : toFeishu()
-      //   this.$notification.info('哈哈')
-    },
-    getLogin() {
-      login(getQueryString().code)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(`---${err}`)
-        })
-    },
-    btnBeiji() {
-      // this.orderFoodUrl = 'http://test-bi.naxions.com/decision?fr_username=seven'
-      this.$refs.iframe.contentWindow.location.replace(
-        'http://10.101.0.71:6060/about'
-        // 'http://test-bi.naxions.com/decision?code=g5eobK6ZAI0SblPQNKaZEtgT9dVP0w8uwSy2yf+Pv1Nei/TXMunLczOG+FjWR5eX'
-      )
-      setTimeout(() => {
-        let myIframe = document.getElementById('fj-iframe').contentWindow.document.getElementsByTagName('body')[0]
-          .innerText
-        if (JSON.parse(myIframe).code === 300) {
-          toFeishu()
-        } else {
-          window.location.replace('http://test-bi.naxions.com')
-        }
-      }, 1000)
+      onCollapse,
+      onBreakpoint
     }
   }
 }
 </script>
-
 <style lang="less" scoped>
+.left-sider {
+  background-color: white;
+  height: 100vh;
+}
 </style>

@@ -1,12 +1,14 @@
-const isProd = false
+const isNeed = false
+// 是否为生产环境
+const isProduction = process.env.NODE_ENV !== 'development'
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const cdn = {
-  css: ['https://unpkg.com/ant-design-vue@2.1.6/dist/antd.min.js'],
+  css: ['https://unpkg.com/browse/ant-design-vue@2.1.6/dist/antd.css'],
   js: [
-    'https://unpkg.com/vue@3',
+    'https://unpkg.com/vue@3.0.0-rc.5/dist/vue.global.js',
     'https://unpkg.com/vue-router@4',
     'https://unpkg.com/vuex@3.0.1/dist/vuex.min.js',
     'https://unpkg.com/axios@0.18.0/dist/axios.min.js',
@@ -76,12 +78,11 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    if (isProd) {
-      config.plugin('html').tap(args => {
-        args[0].cdn = cdn
-        return args
-      })
-    }
+    config.plugin('html').tap(args => {
+      // 生产环境或本地需要cdn时，才注入cdn
+      if (isProduction || isNeed) args[0].cdn = cdn
+      return args
+    })
   },
 
   // CSS 相关选项
@@ -113,23 +114,23 @@ module.exports = {
   pwa: {},
 
   // 用于多页配置，默认是 undefined
-  pages: {
-    index: {
-      // 入口文件
-      entry: 'src/main.js' /*这个是根入口文件*/,
-      // 模板文件
-      template: 'public/index.html',
-      // 输出文件
-      filename: 'index.html',
-      // 页面title
-      title: 'Index Page'
-    },
-    // 简写格式
-    // 模板文件默认是 `public/subpage.html`
-    // 如果不存在，就是 `public/index.html`.
-    // 输出文件默认是 `subpage.html`.
-    subpage: 'src/main.js' /*注意这个是*/
-  },
+  //   pages: {
+  //     index: {
+  //       // 入口文件
+  //       entry: 'src/main.js' /*这个是根入口文件*/,
+  //       // 模板文件
+  //       template: 'public/index.html',
+  //       // 输出文件
+  //       filename: 'index.html',
+  //       // 页面title
+  //       title: 'Index Page'
+  //     },
+  //     // 简写格式
+  //     // 模板文件默认是 `public/subpage.html`
+  //     // 如果不存在，就是 `public/index.html`.
+  //     // 输出文件默认是 `subpage.html`.
+  //     subpage: 'src/main.js' /*注意这个是*/
+  //   },
   // 三方插件的选项
   pluginOptions: {
     // ...

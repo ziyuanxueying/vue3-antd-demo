@@ -6,10 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "buildDev": "vue-cli-service build --mode test",
     "buildTest": "vue-cli-service build --mode test",
     "buildProd": "vue-cli-service build --mode production"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
     "ant-design-vue": "^2.1.6",
     "axios": "^0.21.1",
     "compression-webpack-plugin": "^7.1.2",
