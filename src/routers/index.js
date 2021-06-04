@@ -9,18 +9,21 @@ const routes = [
     meta: { title: '平台首页' },
     children: [
       //   { path: '', redirect: '/' } // 这里写跳转
-      //   {
-      //     path: 'dashboard',
-      //     name: 'Dashboard',
-      //     meta: { title: '工作台' },
-      //     component: () => import('../views/dashboard/index.vue')
-      //   }
+      {
+        path: '/test',
+        meta: { title: '工作台' },
+        component: () => import('../views/test.vue')
+      }
     ]
   },
   {
     path: '/about',
     name: 'About',
     component: () => import('../views/about.vue')
+  },
+  {
+    path: '/index',
+    component: () => import('../layout/layout.vue')
   }
 ]
 const router = createRouter({

@@ -6,6 +6,7 @@ import 'ant-design-vue/dist/antd.css'
 import { message, notification } from 'ant-design-vue'
 import * as antIcons from '@ant-design/icons-vue'
 import router from './routers/index'
+import store from './plugins/store'
 
 //全局注册
 const app = createApp(App)
@@ -18,6 +19,13 @@ Object.keys(antIcons).forEach(key => {
 // 添加到全局
 app.config.globalProperties.$antIcons = antIcons
 
+// vue.js devtools分环境处理
+// if (process.env.NODE_ENV === 'development') {
+//   if ('__VUE_DEVTOOLS_GLOBAL_HOOK__' in window) {
+//     window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app
+//   }
+//   app.config.devtools = true
+// }
 // createApp(App)
 //   .use(router)
 //   .use(store)
@@ -26,4 +34,5 @@ app.config.globalProperties.$antIcons = antIcons
 app
   .use(Antd)
   .use(router)
+  .use(store)
   .mount('#app')
