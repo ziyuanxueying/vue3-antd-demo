@@ -1,7 +1,13 @@
 <template>
-  <div>
+  <a-layout>
     <AppAside></AppAside>
-  </div>
+    <a-layout>
+      <AppHeader></AppHeader>
+      <a-layout-content class="content">
+        <router-view key="/test" />
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
 </template>
 
 <script>
@@ -20,10 +26,13 @@ export default {
     ...components
   },
   data() {
-    return {}
+    return { collapsed: false }
   },
-  mounted() {},
-  methods: {}
+  mounted() {
+    console.log(this.$store.getters)
+  },
+  methods: {},
+  computed: {}
 }
 </script>
 

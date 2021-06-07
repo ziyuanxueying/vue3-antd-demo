@@ -1,23 +1,28 @@
-import { toRefs, reactive } from 'vue'
-import { useStore } from 'vuex'
+// import { toRefs, reactive } from 'vue'
+// import { useStore, createStore } from 'vuex'
+import { createStore } from 'vuex'
 import Storage from '../utils/storage'
-export default {
-  namespaced: true,
-  setup() {
-    const state = reactive({
-      name: ''
-    })
-    const store = useStore()
-    state.name = store.state.Name
-    return { ...toRefs(state) }
-  },
+// export default {
+//   namespaced: true,
+//   setup() {
+//     const state = reactive({
+//       name: ''
+//     })
+//     const store = useStore()
+//     state.name = store.state.Name
+//     return { ...toRefs(state) }
+//   }
+// }
+
+// 创建一个新的 store 实例
+const store = createStore({
   // module assets
   state: {
     // 当前登陆人
     user: undefined,
     // 未解密的token
     token: undefined,
-    isSide: true
+    isSide: false
   },
   getters: {
     /**
@@ -112,4 +117,5 @@ export default {
       context.commit('isSide', isSide)
     }
   }
-}
+})
+export default store
