@@ -3,11 +3,19 @@
     <div class="flex-row-center">
       <img class="logo" src="../../assets/img/ablogo.png" />
     </div>
-    <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys" @click="onSelectChange">
-      <template v-for="(item, i) of menus" :key="i">
+    <a-menu
+      theme="dark"
+      mode="inline"
+      v-model:openKeys="openKeys"
+      :selectedKeys="selectedKeys"
+      @click="onSelectChange"
+      @openChange="onOpenChange"
+    >
+      <template v-for="item of menus">
         <sub-menu
           v-if="item.subs && item.subs.length > 0 && item.subs.filter(v => v.hidden).length !== item.subs.length"
           :item="item"
+          :key="item.name"
         ></sub-menu>
         <menu-item v-else :key="item.name" :item="item"></menu-item>
       </template>
@@ -18,45 +26,46 @@
 <script>
 import MenuItem from './MenuItem.vue'
 import SubMenu from './SubMenu.vue'
+import menu from '../../routers/menu'
+import { ref, reactive, toRefs } from 'vue' // 引入Composition API
 export default {
-  // props: {
-  //   menu: {
-  //     required: true,
-  //     type: Array
-  //   }
-  // },
   components: {
     MenuItem,
     SubMenu
   },
   data() {
     return {
-      selectedKeys: ['test'],
-      menus: [
-        {
-          name: 'test',
-          title: 'a1',
-          icon: 'HomeOutlined'
-        },
-        {
-          name: 'Index',
-          title: '首页',
-          icon: 'HomeOutlined',
-          subs: [
-            {
-              name: 'test1',
-              title: '测试1'
-            }
-          ]
-        }
-      ]
+      openKeys: [],
+      selectedKeys: [],
+      menus: []
     }
   },
-  mounted() {},
+  // setup() {
+  //   // const selectedKeys = reactive([])
+  //   return {
+  //     // selectedKeys
+  //   }
+  // },
+  created() {
+    this.menus = menu
+  },
   methods: {
     onSelectChange({ key }) {
-      console.log(key)
-      this.selectedKeys = [key]
+      // this.selectedKeys = [key]
+      console.log(this.selectedKeys)
+    },
+    onOpenChange(v) {
+      if (v.length === 0 || v.length === 1) {
+        this.openKeys = v
+        return void 0
+      }
+      const latestOpenKey = v[v.length - 1]
+      // 这里与定义的路由规则有关
+      if (latestOpenKey.includes(v[0])) {
+        this.openKeys = v
+      } else {
+        this.openKeys = [latestOpenKey]
+      }
     }
   },
   computed: {
@@ -70,6 +79,7 @@ export default {
 <style lang="less" scoped>
 .left-sider {
   height: 100vh;
+  color: white;
   .logo {
     width: 60px;
     height: 60px;

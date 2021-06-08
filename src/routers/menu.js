@@ -1,46 +1,26 @@
 const menu = [
   {
-    name: 'Index',
+    name: 'index',
     title: '首页',
-    icon: 'HomeOutlined'
+    icon: 'HomeOutlined',
+    path: '/index'
   },
   {
-    title: 'Test',
-    name: 'Test',
-    icon: 'BarsOutlined',
+    name: 'test',
+    title: '测试',
+    icon: 'HomeOutlined',
     subs: [
       {
-        title: 'Test1',
-        name: 'Test1',
-        icon: ''
+        path: '/test',
+        name: 'test',
+        icon: '',
+        title: '测试1'
       },
       {
-        title: 'Test2',
-        name: 'Test2',
+        path: '/about',
+        name: 'about',
         icon: '',
-        subs: [
-          { title: 'Test21', name: 'Test21', icon: '' },
-          { title: 'Test22', name: 'Test22', icon: '' }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Demo',
-    name: 'Demo1',
-    icon: 'BarsOutlined',
-    subs: [
-      {
-        title: 'Demo',
-        name: 'Demo',
-        icon: '',
-        subs: [
-          {
-            title: 'Detail',
-            name: 'Detail',
-            hidden: true
-          }
-        ]
+        title: '关于'
       }
     ]
   }

@@ -32,7 +32,15 @@ export default {
     console.log(this.$store.getters)
   },
   methods: {},
-  computed: {}
+  computed: {
+    key() {
+      console.log(this.$route.path)
+      return this.$route.path
+    },
+    sideShow() {
+      return this.$store.getters['isSide']
+    }
+  }
 }
 </script>
 

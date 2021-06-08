@@ -9,21 +9,34 @@ const routes = [
     meta: { title: '平台首页' },
     children: [
       //   { path: '', redirect: '/' } // 这里写跳转
+      // {
+      //   path: '/about',
+      //   meta: { title: '工作台' },
+      //   component: () => import('../views/about.vue')
+      // }
+    ]
+  },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   component: () => import('../views/about.vue')
+  // },
+  {
+    path: '/index',
+    component: () => import('../layout/layout.vue'),
+    children: [
+      //   { path: '', redirect: '/' } // 这里写跳转
       {
         path: '/test',
         meta: { title: '工作台' },
         component: () => import('../views/test.vue')
+      },
+      {
+        path: '/about',
+        meta: { title: '工作台' },
+        component: () => import('../views/about.vue')
       }
     ]
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/about.vue')
-  },
-  {
-    path: '/index',
-    component: () => import('../layout/layout.vue')
   }
 ]
 const router = createRouter({
