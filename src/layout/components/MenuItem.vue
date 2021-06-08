@@ -1,6 +1,6 @@
 <template>
   <a-menu-item>
-    <router-link :to="item.name">
+    <router-link :to="item.path">
       <component v-if="item.icon" :is="item.icon"></component>
       <span>{{ item.title }}</span>
     </router-link>

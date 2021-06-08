@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       openKeys: [],
-      selectedKeys: [],
+      selectedKeys: ['index'],
       menus: []
     }
   },
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     onSelectChange({ key }) {
-      // this.selectedKeys = [key]
+      this.selectedKeys = [key]
       console.log(this.selectedKeys)
     },
     onOpenChange(v) {

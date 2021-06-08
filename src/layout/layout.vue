@@ -4,7 +4,7 @@
     <a-layout>
       <AppHeader></AppHeader>
       <a-layout-content class="content">
-        <router-view key="/test" />
+        <router-view />
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -45,4 +45,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.content {
+  margin: 24px 16px 0;
+  background-color: white;
+}
 </style>
