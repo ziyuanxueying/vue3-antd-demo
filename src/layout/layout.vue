@@ -29,7 +29,7 @@ export default {
     return { collapsed: false }
   },
   mounted() {
-    console.log(this.$store.getters)
+    // console.log(this.$route.path)
   },
   methods: {},
   computed: {

@@ -27,7 +27,8 @@
 import MenuItem from './MenuItem.vue'
 import SubMenu from './SubMenu.vue'
 import menu from '../../routers/menu'
-import { ref, reactive, toRefs } from 'vue' // 引入Composition API
+// import { ref, reactive, toRefs } from 'vue' // 引入Composition API
+import _ from 'loadsh'
 export default {
   components: {
     MenuItem,
@@ -48,8 +49,24 @@ export default {
   // },
   created() {
     this.menus = menu
+    this.openKeys = this.initMenu().opens
+    this.selectedKeys = [this.initMenu().select]
   },
   methods: {
+    initMenu() {
+      let select = _.find(menu, i => {
+        return i.path === this.$route.path
+      })
+      if (select) return { opens: [], select: select.name }
+      for (const item of menu) {
+        if (!item.path) {
+          let val = _.find(item.subs, o => o.path === this.$route.path)
+          val && (select = { opens: [item.name], select: val.name })
+        }
+      }
+      console.log(select)
+      return select
+    },
     onSelectChange({ key }) {
       this.selectedKeys = [key]
       console.log(this.selectedKeys)

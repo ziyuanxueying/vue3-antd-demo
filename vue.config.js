@@ -8,7 +8,7 @@ const productionGzipExtensions = ['js', 'css']
 const cdn = {
   css: ['https://unpkg.com/browse/ant-design-vue@2.1.6/dist/antd.css'],
   js: [
-    'https://unpkg.com/vue@3.0.0-rc.5/dist/vue.global.js',
+    'https://unpkg.com/vue@3.0.4/dist/vue.global.js',
     'https://unpkg.com/vue-router@4',
     'https://unpkg.com/vuex@3.0.1/dist/vuex.min.js',
     'https://unpkg.com/axios@0.18.0/dist/axios.min.js',
