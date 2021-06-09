@@ -52,7 +52,6 @@ export default {
           val && (select = [{ name: item.name, title: item.title }, val])
         }
       }
-      console.log(select)
       return select
     },
     sideClick() {
@@ -68,7 +67,6 @@ export default {
   },
   watch: {
     $route(newVal) {
-      console.log(newVal)
       this.breadList = this.initBreadcrumb()
     }
   }
